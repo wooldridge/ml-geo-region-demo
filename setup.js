@@ -83,7 +83,7 @@ function createREST() {
     .then(function (parsedBody) {
       console.log('REST instance created at port: ' + config.restSetup["rest-api"]["port"]);
       //createOptions();
-      loadData();
+      //loadData();
     })
     .catch(function (err) {
       console.log(JSON.stringify(err, null, 2));

@@ -9,9 +9,9 @@ Demo of geospatial region search
 
 ## To Run
 
-```git clone https://github.com/wooldridge/ml-geo-regions```
+```git clone https://github.com/wooldridge/ml-geo-region-demo```
 
-```cd ml-geo-regions```
+```cd ml-geo-region-demo```
 
 ```npm install```
 

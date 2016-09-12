@@ -90,36 +90,6 @@ function createREST() {
     });
 }
 
-var dataPath = config.path + 'docs/'
-    dataFiles = fs.readdirSync(dataPath),
-    count = 0;
-
-function loadData() {
-  var currFile = dataFiles.shift();
-  count++;
-  var buffer;
-  buffer = fs.readFileSync(dataPath + currFile);
-
-  var options = {
-    method: 'PUT',
-    uri: 'http://' + config.host + ':' + config.restSetup["rest-api"]["port"] + '/v1/documents?database=' + config.databaseSetup["database-name"] + '&uri=/' + currFile + '&collection=docs',
-    body: buffer,
-    auth: config.auth
-  };
-  rp(options)
-    .then(function (parsedBody) {
-      console.log('Document loaded: ' + currFile);
-      if (dataFiles.length > 0) {
-        loadData();
-      } else {
-        console.log('Data loaded');
-      }
-    })
-    .catch(function (err) {
-      console.log(JSON.stringify(err, null, 2));
-    });
-}
-
 function start() {
   createDatabase();
 }

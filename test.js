@@ -11,39 +11,32 @@ var db = marklogic.createDatabaseClient({
 
 var q = marklogic.queryBuilder;
 
-var poly = q.polygon(
-  [12.5210, -69.9684],
-  [12.5212, -69.9684],
-  [12.5212, -69.9682],
-  [12.5210, -69.9682]
+// Get spatial relation from command line
+var relation = process.argv[2] || 'intersects';
+
+// Define a search polygon
+var ml_neighborhood = q.polygon(
+  [37.519087, -122.26346],
+  [37.521299, -122.24805],
+  [37.512279, -122.24462],
+  [37.50336,  -122.24556],
+  [37.506185, -122.25981],
+  [37.513436, -122.26337],
+  [37.519087, -122.26346]
 );
-
-var point = q.point(
-  26.2285, 50.5860
-);
-
-//25.2744° S, 133.7751
-//
-//12.5092° N, 70.0086
-
-//12.5211° -69.9683°
-//
-////40.1792° N, 44.4991° E
-///
-///26.2285° N, 50.5860
-
-var whereClause = q.geospatialRegion(
-      q.geoPath('/envelope/ctsRegion'),
-      'intersects',
-      point
-    );
 
 db.documents.query(
-  q.where(whereClause)
-  .withOptions({"debug": true})
+  q.where(
+    q.geospatialRegion(
+      q.geoPath('/envelope/ctsRegion'),
+      relation,
+      ml_neighborhood
+    )
+  )
 ).result(function(result) {
-    console.log(JSON.stringify(result[0], null, 2));
-    //console.log(JSON.stringify(result[0].content.envelope.feature.properties, null, 2));
+    for (var r of result) {
+      console.log(r.uri);
+    }
   },
   function(error) {
     console.log(JSON.stringify(error, null, 2));

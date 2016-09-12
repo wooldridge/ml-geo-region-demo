@@ -20,3 +20,9 @@ Copy `config_sample.js` to `config.js` and edit `config.js` for your setup (path
 ```node setup```
 
 To undo setup from root directory: `node teardown`
+
+Run region query:
+
+```node test.js <relation>```
+
+Where `<relation>` is: equals|disjoint|touches|contains|covers|intersects|within|covered-by|crosses|overlaps
